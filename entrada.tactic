@@ -1,0 +1,28 @@
+Tactic {
+    
+    player(1) move(10,30)
+
+    
+    player(2) move(25,10)
+    player(3) move(25,20)
+    player(4) move(25,40)
+    player(5) move(25,50)
+
+    
+    player(6) move(40,20)
+    player(7) move(40,40)
+
+    
+    player(8) move(55,10)
+    player(9) move(55,30)
+    player(10) move(55,50)
+
+    
+    player(11) move(70,30)
+
+    
+    player(1) pass(7)
+    player(7) pass(10)
+    player(10) pass(11)
+    player(11) shoot(goal)
+}

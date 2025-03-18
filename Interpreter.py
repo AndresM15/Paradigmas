@@ -3,27 +3,21 @@ from GramTaticBoardLexer import GramTaticBoardLexer
 from GramTaticBoardParser import GramTaticBoardParser
 from GramTaticBoardListener import GramTaticBoardListener
 from visualizer import TacticVisualizer
+from menu_tactic import menu
 
 class TaticInterpreter(GramTaticBoardListener):
     def __init__(self):
         self.visualizer = TacticVisualizer()
 
     def enterPlayerAction(self, ctx: GramTaticBoardParser.PlayerActionContext):
-        """
-        playerAction: 'player' '(' INT ')' action
-        """
-        # Muestra el texto completo del subárbol
         text = ctx.getText()
         print(f"[DEBUG] Contexto completo: {text}")
 
-        # Extrae el número del jugador
         player_str = ctx.INT().getText()
         player = int(player_str)
 
-        # Identifica la acción
         action_ctx = ctx.action()
         if action_ctx.moveAction():
-            # move(30,40)
             x_str = action_ctx.moveAction().INT(0).getText()
             y_str = action_ctx.moveAction().INT(1).getText()
             x, y = int(x_str), int(y_str)
@@ -31,42 +25,57 @@ class TaticInterpreter(GramTaticBoardListener):
             self.visualizer.add_player(player, x, y)
 
         elif action_ctx.passAction():
-            # pass(7)
             target_str = action_ctx.passAction().INT().getText()
             target = int(target_str)
             print(f"Jugador {player} pasa el balón a {target}")
-            # Jugador target debe tener posición
             self.visualizer.add_ball_pass(player, target)
 
         elif action_ctx.shootAction():
-            # shoot(goal)
             print(f"Jugador {player} dispara al arco")
             self.visualizer.add_shot(player)
 
     def show_visualization(self):
-        """Muestra la táctica al final."""
         print("[INFO] Mostrando visualización...")
         self.visualizer.show()
 
 def main():
-    input_file = "entrada.tactic"
-    print(f"[INFO] Procesando archivo: {input_file}")
+    print("\nMenú Principal:")
+    print("1. Cargar táctica desde archivo")
+    print("2. Ingresar táctica manualmente")
+    print("3. Salir")
 
-    try:
-        input_stream = FileStream(input_file, encoding="utf-8")
-        lexer = GramTaticBoardLexer(input_stream)
-        stream = CommonTokenStream(lexer)
-        parser = GramTaticBoardParser(stream)
-        tree = parser.tactic()
+    opcion = input("Seleccione una opción: ")
 
-        interpreter = TaticInterpreter()
-        walker = ParseTreeWalker()
-        walker.walk(interpreter, tree)
+    if opcion == "1":
+        input_file = "entrada.tactic"
+        print(f"[INFO] Procesando archivo: {input_file}")
 
-        interpreter.show_visualization()
+        try:
+            input_stream = FileStream(input_file, encoding="utf-8")
+            lexer = GramTaticBoardLexer(input_stream)
+            stream = CommonTokenStream(lexer)
+            parser = GramTaticBoardParser(stream)
+            tree = parser.tactic()
 
-    except Exception as e:
-        print(f"[ERROR] Ocurrió un problema al procesar la táctica: {e}")
+            interpreter = TaticInterpreter()
+            walker = ParseTreeWalker()
+            walker.walk(interpreter, tree)
+
+            interpreter.show_visualization()
+
+        except Exception as e:
+            print(f"[ERROR] Ocurrió un problema al procesar la táctica: {e}")
+
+    elif opcion == "2":
+        menu()
+
+    elif opcion == "3":
+        print("👋 Saliendo del programa.")
+        return
+
+    else:
+        print("⚠️ Opción no válida. Intente nuevamente.")
+        main()
 
 if __name__ == "__main__":
     main()

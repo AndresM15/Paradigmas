@@ -14,6 +14,11 @@ class GramTaticBoardVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by GramTaticBoardParser#statement.
+    def visitStatement(self, ctx:GramTaticBoardParser.StatementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by GramTaticBoardParser#playerAction.
     def visitPlayerAction(self, ctx:GramTaticBoardParser.PlayerActionContext):
         return self.visitChildren(ctx)
@@ -24,20 +29,24 @@ class GramTaticBoardVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GramTaticBoardParser#move.
-    def visitMove(self, ctx:GramTaticBoardParser.MoveContext):
+    # Visit a parse tree produced by GramTaticBoardParser#moveAction.
+    def visitMoveAction(self, ctx:GramTaticBoardParser.MoveActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GramTaticBoardParser#pass.
-    def visitPass(self, ctx:GramTaticBoardParser.PassContext):
+    # Visit a parse tree produced by GramTaticBoardParser#passAction.
+    def visitPassAction(self, ctx:GramTaticBoardParser.PassActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GramTaticBoardParser#shoot.
-    def visitShootAction(self, ctx: GramTaticBoardParser.ShootActionContext):
-        ...
+    # Visit a parse tree produced by GramTaticBoardParser#shootAction.
+    def visitShootAction(self, ctx:GramTaticBoardParser.ShootActionContext):
+        return self.visitChildren(ctx)
 
+
+    # Visit a parse tree produced by GramTaticBoardParser#instructionSet.
+    def visitInstructionSet(self, ctx:GramTaticBoardParser.InstructionSetContext):
+        return self.visitChildren(ctx)
 
 
 

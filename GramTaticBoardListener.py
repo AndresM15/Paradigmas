@@ -71,5 +71,14 @@ class GramTaticBoardListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GramTaticBoardParser#instructionSet.
+    def enterInstructionSet(self, ctx:GramTaticBoardParser.InstructionSetContext):
+        pass
+
+    # Exit a parse tree produced by GramTaticBoardParser#instructionSet.
+    def exitInstructionSet(self, ctx:GramTaticBoardParser.InstructionSetContext):
+        pass
+
+
 
 del GramTaticBoardParser
